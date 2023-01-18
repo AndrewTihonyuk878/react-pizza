@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setSort } from '../redux/slices/filterSlice';
 
-const list = [
+export const list = [
   { name: 'popular (DESC)', sortProperty: 'rating' },
   { name: 'popular (ASC)', sortProperty: '-rating' },
   { name: 'price (DESC)', sortProperty: 'price' },
@@ -16,13 +17,26 @@ function Sort() {
   const [visibleSorts, setVisibleSorts] = React.useState(false);
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filterSlice.sort);
+  const sortRef = useRef();
 
   const onSelectedSort = (obj) => {
     dispatch(setSort(obj));
     setVisibleSorts(false);
   };
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      let path = e.composedPath().includes(sortRef.current);
+      if (!path) setVisibleSorts(false);
+    };
+    document.body.addEventListener('click', onClickOutside);
+    return () => {
+      document.body.removeEventListener('click', onClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
