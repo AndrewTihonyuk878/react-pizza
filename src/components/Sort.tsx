@@ -4,7 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectSort, setSort } from '../redux/slices/filterSlice';
 
-export const list = [
+type SortItem = {
+  name: string,
+  sortProperty: string
+}
+
+export const list: SortItem[] = [
   { name: 'popular (DESC)', sortProperty: 'rating' },
   { name: 'popular (ASC)', sortProperty: '-rating' },
   { name: 'price (DESC)', sortProperty: 'price' },
@@ -17,15 +22,15 @@ function Sort() {
   const [visibleSorts, setVisibleSorts] = React.useState(false);
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
-  const onSelectedSort = (obj) => {
+  const onSelectedSort = (obj: SortItem) => {
     dispatch(setSort(obj));
     setVisibleSorts(false);
   };
 
   useEffect(() => {
-    const onClickOutside = (e) => {
+    const onClickOutside = (e: any) => {
       let path = e.composedPath().includes(sortRef.current);
       if (!path) setVisibleSorts(false);
     };
@@ -36,7 +41,7 @@ function Sort() {
   }, []);
 
   return (
-    <div ref={sortRef} className="sort">
+    <div ref={sortRef}  className="sort">
       <div className="sort__label">
         <svg
           width="10"
