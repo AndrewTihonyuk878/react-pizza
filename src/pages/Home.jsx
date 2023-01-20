@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import qs from 'qs';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   selectFilter,
@@ -14,7 +14,6 @@ import Sort, { list } from '../components/Sort';
 import PizzaBlock from '../components/pizzaBlock/PizzaBlock';
 import Skeleton from '../components/pizzaBlock/Skeleton';
 import Pagination from '../components/pagination/Pagination';
-import { SearchContext } from '../App';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzasSlice';
 
 const Home = () => {
@@ -83,9 +82,10 @@ const Home = () => {
   }, []);
 
   const pizzas = items.map((pizza) => (
-    <Link key={pizza.id} to={`/pizza/${pizza.id}`}>
-      <PizzaBlock {...pizza} />
-    </Link>
+    <PizzaBlock key={pizza.id} {...pizza} />
+    // <Link key={pizza.id} to={`/pizza/${pizza.id}`}>
+    //   <PizzaBlock {...pizza} />
+    // </Link>
   ));
 
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
