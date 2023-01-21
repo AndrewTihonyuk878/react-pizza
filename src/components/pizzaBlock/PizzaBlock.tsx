@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { addItem, selectCartItemById } from '../../redux/slices/cartSlice';
+import { addItem, selectCartItemById, TCartItem } from '../../redux/slices/cartSlice';
 
 const typePizza = ['thin', 'traditional'];
 
@@ -25,13 +25,14 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
   const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAdd = () => {
-    const item = {
+    const item: TCartItem = {
       id,
       title,
       price,
       imageUrl,
       type: typePizza[activeType],
       size: sizes[activeSize],
+      count: 0
     };
     dispatch(addItem(item));
   };
