@@ -25,9 +25,9 @@ const Home: React.FC = () => {
   const { items, status } = useSelector(selectPizzaData);
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, [])
 
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));

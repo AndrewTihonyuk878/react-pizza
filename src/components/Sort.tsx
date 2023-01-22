@@ -18,7 +18,7 @@ export const list: SortItem[] = [
   { name: 'alphabetically (ASC)', sortProperty: SortPropertyEnum.TITLE_ASK },
 ];
 
-function SortPopup() {
+const SortPopup: React.FC = () => {
   const [visibleSorts, setVisibleSorts] = React.useState(false);
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
